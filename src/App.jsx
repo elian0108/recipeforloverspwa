@@ -11,7 +11,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 function App() {
   return (
     <LanguageProvider>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/recipes" element={<RecipesPage />} />
