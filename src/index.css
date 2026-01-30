@@ -1,0 +1,36 @@
+:root {
+  --primary: #E91E63;
+  --primary-dark: #C2185B;
+  --background: #121212;
+  --surface: #1E1E1E;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B0B0B0;
+  --error: #CF6679;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
