@@ -35,7 +35,7 @@ const AdBanner = ({ dataAdSlot = "XXXXXXX", dataAdFormat = 'auto', dataFullWidth
             <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '8px' }}>{t('advertisement') || 'Advertisement'}</p>
             <ins className="adsbygoogle"
                 style={{ display: 'block' }}
-                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-client="ca-pub-2519620943582648"
                 data-ad-slot={dataAdSlot}
                 data-ad-format={dataAdFormat}
                 data-full-width-responsive={dataFullWidthResponsive}>
