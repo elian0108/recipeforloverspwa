@@ -1,11 +1,13 @@
 :root {
-  --primary: #E91E63;
-  --primary-dark: #C2185B;
-  --background: #121212;
-  --surface: #1E1E1E;
-  --text-primary: #FFFFFF;
-  --text-secondary: #B0B0B0;
-  --error: #CF6679;
+  --primary: #FF6B6B;
+  --primary-dark: #E55A5A;
+  --secondary: #FF9F43;
+  --background: #FFF0F3;
+  --surface: #FFFFFF;
+  --text-primary: #4A3636;
+  --text-secondary: #8C7B7B;
+  --error: #FF7675;
+  --success: #55EFC4;
 }
 
 body {
@@ -24,13 +26,16 @@ button {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--surface);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }

@@ -19,7 +19,7 @@ export default defineConfig({
         name: 'Recipe for Lovers',
         short_name: 'Lovers',
         description: 'App romântico para salvar e compartilhar receitas',
-        theme_color: '#E91E63',
+        theme_color: '#FF6B6B',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [
