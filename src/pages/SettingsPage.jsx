@@ -102,7 +102,7 @@ const SettingsPage = () => {
                         ref={fileInputRef}
                         onChange={handleImportFile}
                         style={{ display: 'none' }}
-                        accept="application/json"
+                        accept=".json,application/json,*/*"
                     />
                 </section>
 
