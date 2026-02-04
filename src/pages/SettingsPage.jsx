@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Globe, Download, Upload, Printer, FileText } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { db } from '../db';
-import 'dexie-export-import';
+import { exportDB, importInto } from 'dexie-export-import';
 import './SettingsPage.css';
 
 const SettingsPage = () => {
@@ -13,7 +13,7 @@ const SettingsPage = () => {
 
     const handleExport = async () => {
         try {
-            const blob = await db.export();
+            const blob = await exportDB(db);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -22,7 +22,7 @@ const SettingsPage = () => {
             URL.revokeObjectURL(url);
         } catch (error) {
             console.error("Export failed", error);
-            alert("Export requires 'dexie-export-import'. Ensure it's installed or use simple backup.");
+            alert("Export failed: " + error.message);
         }
     };
 
@@ -33,8 +33,21 @@ const SettingsPage = () => {
     const handleImportFile = async (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (!window.confirm("Atenção: Restaurar um backup irá substituir todos os dados atuais. Deseja continuar?")) {
+                return;
+            }
+
             try {
-                await db.import(file);
+                // Clear existing data before importing
+                await db.transaction('rw', db.tables, () => {
+                    return Promise.all(db.tables.map(table => table.clear()));
+                });
+
+                await importInto(db, file, {
+                    clearTables: true,
+                    acceptMissingTables: true
+                });
+
                 alert(t('restore_success'));
                 window.location.reload();
             } catch (error) {
