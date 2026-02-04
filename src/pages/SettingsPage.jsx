@@ -19,7 +19,7 @@ const SettingsPage = () => {
             a.href = url;
             a.download = `backup-receitas-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
         } catch (error) {
             console.error("Export failed", error);
             alert("Export failed: " + error.message);
@@ -165,8 +165,8 @@ const SettingsPage = () => {
                 <section className="settings-section">
                     <h2>{t('other_options_title')}</h2>
                     <button className="settings-item" onClick={handlePrint}>
-                        <Printer size={20} />
-                        <span>{t('print_recipe_book')}</span>
+                        <FileText size={20} />
+                        <span>Salvar Livro como PDF</span>
                     </button>
                     <button className="settings-item" onClick={() => navigate('/privacy')}>
                         <FileText size={20} />
