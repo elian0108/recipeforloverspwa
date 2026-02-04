@@ -44,6 +44,63 @@ const SettingsPage = () => {
         }
     };
 
+    const handlePrint = async () => {
+        const recipes = await db.recipes.toArray();
+        const printWindow = window.open('', '_blank');
+
+        if (!printWindow) {
+            alert("Por favor, permita popups para imprimir.");
+            return;
+        }
+
+        const content = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Livro de Receitas - ${t('app_name')}</title>
+                <style>
+                    body { font-family: sans-serif; padding: 20px; color: #333; }
+                    h1 { text-align: center; color: #E91E63; border-bottom: 2px solid #E91E63; padding-bottom: 10px; }
+                    .recipe { margin-bottom: 40px; page-break-inside: avoid; border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+                    .recipe h2 { margin-top: 0; color: #333; }
+                    .meta { color: #666; font-size: 0.9em; margin-bottom: 15px; }
+                    .section { margin-top: 15px; }
+                    .section h3 { font-size: 1.1em; color: #E91E63; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+                    p { white-space: pre-wrap; line-height: 1.5; }
+                    @media print {
+                        .no-print { display: none; }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Livro de Receitas da Família</h1>
+                ${recipes.map(recipe => `
+                    <div class="recipe">
+                        <h2>${recipe.name}</h2>
+                        <div class="meta">Adicionado em: ${new Date(recipe.createdAt || Date.now()).toLocaleDateString()}</div>
+                        
+                        <div class="section">
+                            <h3>${t('ingredients')}</h3>
+                            <p>${recipe.ingredients}</p>
+                        </div>
+                        
+                        <div class="section">
+                            <h3>${t('instructions')}</h3>
+                            <p>${recipe.instructions}</p>
+                        </div>
+                    </div>
+                `).join('')}
+                <script>
+                    window.onload = () => { window.print(); window.close(); }
+                </script>
+            </body>
+            </html>
+        `;
+
+        printWindow.document.write(content);
+        printWindow.document.close();
+    };
+
     return (
         <div className="settings-page">
             <header className="settings-header">
@@ -54,7 +111,6 @@ const SettingsPage = () => {
             </header>
 
             <div className="settings-content">
-
                 {/* Creating a Dexie export/import without the package if it fails */}
                 <section className="settings-section">
                     <h2>{t('data_management_title')}</h2>
@@ -95,7 +151,7 @@ const SettingsPage = () => {
 
                 <section className="settings-section">
                     <h2>{t('other_options_title')}</h2>
-                    <button className="settings-item" onClick={() => window.print()}>
+                    <button className="settings-item" onClick={handlePrint}>
                         <Printer size={20} />
                         <span>{t('print_recipe_book')}</span>
                     </button>
