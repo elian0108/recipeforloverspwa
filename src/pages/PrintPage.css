@@ -77,6 +77,27 @@
     margin-bottom: 20px;
 }
 
+.recipe-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.print-image-container {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.print-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .recipe-section h3 {
     font-size: 1.1rem;
     color: var(--primary);

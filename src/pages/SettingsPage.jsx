@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Globe, Download, Upload, Printer, FileText } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { db } from '../db';
-import { exportDB, importInto } from 'dexie-export-import';
+import { exportDB, importDB } from 'dexie-export-import';
 import './SettingsPage.css';
 
 const SettingsPage = () => {
@@ -33,22 +33,42 @@ const SettingsPage = () => {
     const handleImportFile = async (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (!window.confirm("Atenção: Restaurar um backup irá substituir todos os dados atuais. Deseja continuar?")) {
+            if (!window.confirm("Deseja importar as receitas do backup? Isso não apagará suas receitas atuais, apenas adicionará as novas.")) {
                 return;
             }
 
             try {
-                // Clear existing data before importing
-                await db.transaction('rw', db.tables, () => {
-                    return Promise.all(db.tables.map(table => table.clear()));
+                // Import to a temporary in-memory database to inspect contents
+                const tempDb = await importDB(file);
+
+                // Get all data from temp DB
+                const newRecipes = await tempDb.table('recipes').toArray();
+                const newMedia = await tempDb.table('media').toArray();
+
+                // Get current IDs to avoid duplicates
+                const currentRecipeIds = new Set(await db.recipes.toCollection().primaryKeys());
+
+                // Filter recipes that don't satisfy "keep existing" rule
+                const recipesToAdd = newRecipes.filter(r => !currentRecipeIds.has(r.id));
+
+                // Only add media for the recipes we are actually adding
+                const addedRecipeIds = new Set(recipesToAdd.map(r => r.id));
+                const mediaToAdd = newMedia.filter(m => addedRecipeIds.has(m.recipeId));
+
+                if (recipesToAdd.length === 0) {
+                    alert("Nenhuma receita nova encontrada no backup. Todas já existem.");
+                    tempDb.close();
+                    return;
+                }
+
+                await db.transaction('rw', db.recipes, db.media, async () => {
+                    await db.recipes.bulkAdd(recipesToAdd);
+                    await db.media.bulkAdd(mediaToAdd);
                 });
 
-                await importInto(db, file, {
-                    clearTables: true,
-                    acceptMissingTables: true
-                });
+                tempDb.close();
 
-                alert(t('restore_success'));
+                alert(`${recipesToAdd.length} receitas restauradas com sucesso!`);
                 window.location.reload();
             } catch (error) {
                 console.error("Import failed", error);
@@ -56,8 +76,6 @@ const SettingsPage = () => {
             }
         }
     };
-
-
 
     return (
         <div className="settings-page">
@@ -69,7 +87,6 @@ const SettingsPage = () => {
             </header>
 
             <div className="settings-content">
-                {/* Creating a Dexie export/import without the package if it fails */}
                 <section className="settings-section">
                     <h2>{t('data_management_title')}</h2>
                     <button className="settings-item" onClick={handleExport}>

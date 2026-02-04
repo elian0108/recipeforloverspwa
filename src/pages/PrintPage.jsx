@@ -6,6 +6,49 @@ import { db } from '../db';
 import { useLanguage } from '../contexts/LanguageContext';
 import './PrintPage.css';
 
+const PrintRecipeItem = ({ recipe, t }) => {
+    // Fetch media for this specific recipe
+    const mediaList = useLiveQuery(() => db.media.where({ recipeId: recipe.id }).toArray(), [recipe.id]);
+
+    // Filter for images only (no videos)
+    const images = mediaList ? mediaList.filter(m => m.type !== 'video' && m.blob) : [];
+
+    return (
+        <div className="recipe-card">
+            <h2>{recipe.name}</h2>
+            <div className="recipe-meta">
+                Adicionado em: {new Date(recipe.createdAt || Date.now()).toLocaleDateString()}
+                <br />
+                {images.length > 0 && <span className="photo-count">({images.length} fotos incluídas)</span>}
+            </div>
+
+            {images.length > 0 && (
+                <div className="recipe-images">
+                    {images.map(img => (
+                        <div key={img.id} className="print-image-container">
+                            <img
+                                src={URL.createObjectURL(img.blob)}
+                                alt={`Foto de ${recipe.name}`}
+                                className="print-image"
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            <div className="recipe-section">
+                <h3>{t('ingredients')}</h3>
+                <p>{recipe.ingredients}</p>
+            </div>
+
+            <div className="recipe-section">
+                <h3>{t('instructions')}</h3>
+                <p>{recipe.instructions}</p>
+            </div>
+        </div>
+    );
+};
+
 const PrintPage = () => {
     const navigate = useNavigate();
     const { t } = useLanguage();
@@ -14,7 +57,7 @@ const PrintPage = () => {
 
     useEffect(() => {
         if (recipes && recipes.length > 0) {
-            // Give images and layout a moment to settle
+            // Give images time to load
             const timer = setTimeout(() => {
                 setIsReady(true);
                 window.print();
@@ -52,22 +95,7 @@ const PrintPage = () => {
                 ) : (
                     <div className="recipes-grid">
                         {recipes.map(recipe => (
-                            <div key={recipe.id} className="recipe-card">
-                                <h2>{recipe.name}</h2>
-                                <div className="recipe-meta">
-                                    Adicionado em: {new Date(recipe.createdAt || Date.now()).toLocaleDateString()}
-                                </div>
-
-                                <div className="recipe-section">
-                                    <h3>{t('ingredients')}</h3>
-                                    <p>{recipe.ingredients}</p>
-                                </div>
-
-                                <div className="recipe-section">
-                                    <h3>{t('instructions')}</h3>
-                                    <p>{recipe.instructions}</p>
-                                </div>
-                            </div>
+                            <PrintRecipeItem key={recipe.id} recipe={recipe} t={t} />
                         ))}
                     </div>
                 )}
