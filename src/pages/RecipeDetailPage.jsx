@@ -5,7 +5,6 @@ import { ArrowLeft, Edit, Trash2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { db } from '../db';
 import VideoPlayer from '../components/VideoPlayer';
-import AdBanner from '../components/AdBanner';
 import './RecipeDetailPage.css';
 
 const RecipeDetailPage = () => {
@@ -84,8 +83,6 @@ const RecipeDetailPage = () => {
                         <p>{recipe.instructions}</p>
                     </div>
                 </div>
-
-                <AdBanner />
             </div>
         </div>
     );

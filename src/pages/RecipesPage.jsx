@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, ChevronRight, Search, Settings, X } from 'lucide-react';
+import { Plus, ChevronRight, Search, Settings } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { db } from '../db';
-import AdBanner from '../components/AdBanner';
 import './RecipesPage.css';
 
 const RecipesPage = () => {
     const navigate = useNavigate();
     const { t } = useLanguage();
     const recipes = useLiveQuery(() => db.recipes.orderBy('updatedAt').reverse().toArray());
-    const [showAd, setShowAd] = useState(true);
 
     return (
-        <div className={`page-container ${showAd ? 'has-ad' : ''}`}>
+        <div className="page-container">
             <header className="app-header">
                 <h1>{t('recipes_title')}</h1>
                 <Link to="/settings" className="settings-link">
@@ -49,17 +47,8 @@ const RecipesPage = () => {
                 )}
             </div>
 
-            {showAd && (
-                <div className="footer-ad-container">
-                    <button className="close-ad-btn" onClick={() => setShowAd(false)}>
-                        <X size={16} />
-                    </button>
-                    <AdBanner dataAdSlot="footer-slot" />
-                </div>
-            )}
-
             <button
-                className={`fab ${showAd ? 'fab-with-ad' : ''}`}
+                className="fab"
                 onClick={() => navigate('/recipes/new')}
                 aria-label={t('add_recipe')}
             >

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heart, ChefHat, WifiOff, Video, Download } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import InterstitialAd from '../components/InterstitialAd';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -33,20 +32,12 @@ const LandingPage = () => {
         }
     };
 
-    const [showAd, setShowAd] = useState(false);
-
     const handleEnterApp = () => {
-        setShowAd(true);
-    };
-
-    const handleAdClose = () => {
-        setShowAd(false);
         navigate('/recipes');
     };
 
     return (
         <div className="landing-page">
-            {showAd && <InterstitialAd onClose={handleAdClose} />}
 
             <div className="hero-section">
                 <div className="floating-shapes">
