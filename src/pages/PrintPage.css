@@ -1,0 +1,114 @@
+.print-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    min-height: 100vh;
+    color: #333;
+}
+
+.print-controls {
+    background: var(--surface);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.print-instructions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    background: #FFF0F3;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px dashed var(--primary);
+    color: var(--primary-dark);
+}
+
+.cta-button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.print-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 20px;
+}
+
+.print-header h1 {
+    color: var(--primary);
+    margin: 0 0 10px 0;
+}
+
+.recipe-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    background: white;
+}
+
+.recipe-card h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.recipe-meta {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.recipe-section h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.recipe-section p {
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.print-footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.8rem;
+    color: #aaa;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .print-page {
+        padding: 0;
+        max-width: none;
+    }
+
+    .recipe-card {
+        border: none;
+        border-bottom: 1px solid #ccc;
+    }
+}

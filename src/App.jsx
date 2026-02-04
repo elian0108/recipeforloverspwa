@@ -8,6 +8,8 @@ import RecipeFormPage from './pages/RecipeFormPage';
 import SettingsPage from './pages/SettingsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
+import PrintPage from './pages/PrintPage';
+
 function App() {
   return (
     <LanguageProvider>
@@ -19,6 +21,7 @@ function App() {
           <Route path="/recipes/:id" element={<RecipeDetailPage />} />
           <Route path="/recipes/:id/edit" element={<RecipeFormPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/print-book" element={<PrintPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
         </Routes>
       </Router>
