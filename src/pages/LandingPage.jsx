@@ -99,6 +99,20 @@ const LandingPage = () => {
                 </div>
             </div>
 
+            <div className="about-section" style={{ padding: '2rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+                <h2>Culinária Romântica e Presentes</h2>
+                <p>
+                    Bem-vindo ao <strong>Receitas para Casal</strong>, seu guia completo para cozinhar a dois. 
+                    Encontre as melhores receitas românticas, ideias de jantares para o Dia dos Namorados e presentes criativos.
+                </p>
+                <div style={{ margin: '2rem 0' }}>
+                    <p>Transforme a cozinha em um cenário de romance com nosso app PWA leve e rápido.</p>
+                </div>
+                 <footer>
+                    <a href="/privacy" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Política de Privacidade</a>
+                </footer>
+            </div>
+
             {isIOS && (
                 <div className="ios-instructions">
                     <p>Para instalar no iPhone:</p>
