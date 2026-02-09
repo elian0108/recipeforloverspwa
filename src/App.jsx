@@ -8,6 +8,8 @@ import RecipeFormPage from './pages/RecipeFormPage';
 import SettingsPage from './pages/SettingsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
+import AboutPage from './pages/AboutPage';
+import TermsPage from './pages/TermsPage';
 import PrintPage from './pages/PrintPage';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/print-book" element={<PrintPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
         </Routes>
       </Router>
     </LanguageProvider>
