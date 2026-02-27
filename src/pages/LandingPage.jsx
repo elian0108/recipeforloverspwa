@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Heart, ChefHat, WifiOff, Video, Download, Star, Coffee, Gift, HelpCircle, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import './LandingPage.css';
+import AdBanner from '../components/AdBanner';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -110,6 +111,8 @@ const LandingPage = () => {
                 </div>
             </div>
 
+            <AdBanner />
+
             <div className="sample-section container">
                 <h2 className="section-title">Receitas que Inspiram o Amor</h2>
                 <p className="section-subtitle">Confira algumas das ideias que você pode criar e salvar no app.</p>
@@ -152,6 +155,8 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+
+            <AdBanner />
 
             <div className="faq-section container">
                 <h2 className="section-title">Perguntas Frequentes</h2>

@@ -5,6 +5,7 @@ import { Plus, ChevronRight, Search, Settings } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { db } from '../db';
 import './RecipesPage.css';
+import AdBanner from '../components/AdBanner';
 
 const RecipesPage = () => {
     const navigate = useNavigate();
@@ -24,6 +25,8 @@ const RecipesPage = () => {
                 <Search size={20} className="search-icon" />
                 <input type="text" placeholder={t('search_hint')} />
             </div>
+
+            <AdBanner />
 
             <div className="recipe-list">
                 {!recipes ? (
